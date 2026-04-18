@@ -1,0 +1,10 @@
+---
+pre-commit:
+  commands:
+    git-no-local-paths:
+      run: timeout ${LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT:-30} lefthook-git-no-local-paths {staged_files}
+
+pre-push:
+  commands:
+    git-no-local-paths:
+      run: timeout ${LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT:-30} lefthook-git-no-local-paths {push_files}
