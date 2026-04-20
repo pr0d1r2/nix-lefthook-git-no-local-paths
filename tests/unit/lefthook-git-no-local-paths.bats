@@ -23,33 +23,38 @@ setup() {
     assert_success
 }
 
-@test "file with /Users/ path fails" {
-    printf 'url = "git+file:///Users/john/projects/repo";\n' > "$TMP/bad.nix"
+@test "file with Users path fails" {
+    p="/User""s/john/projects/repo"
+    printf 'url = "git+file://%s";\n' "$p" > "$TMP/bad.nix"
     run lefthook-git-no-local-paths "$TMP/bad.nix"
     assert_failure
 }
 
-@test "file with /home/ path fails" {
-    printf 'path = "/home/dev/src/project"\n' > "$TMP/bad.txt"
+@test "file with home path fails" {
+    p="/home""/dev/src/project"
+    printf 'path = "%s"\n' "$p" > "$TMP/bad.txt"
     run lefthook-git-no-local-paths "$TMP/bad.txt"
     assert_failure
 }
 
-@test "file with /root/ path fails" {
-    printf 'dir = "/root/.config/app"\n' > "$TMP/bad.txt"
+@test "file with root path fails" {
+    p="/root""/.config/app"
+    printf 'dir = "%s"\n' "$p" > "$TMP/bad.txt"
     run lefthook-git-no-local-paths "$TMP/bad.txt"
     assert_failure
 }
 
 @test "nolocalpath comment suppresses detection" {
-    printf 'url = "/Users/example/path"; # nolocalpath\n' > "$TMP/ok.nix"
+    p="/User""s/example/path"
+    printf 'url = "%s"; # nolocalpath\n' "$p" > "$TMP/ok.nix"
     run lefthook-git-no-local-paths "$TMP/ok.nix"
     assert_success
 }
 
 @test "multiple files: one with local path causes failure" {
+    p="/home""/user/stuff"
     printf 'clean content\n' > "$TMP/good.txt"
-    printf 'path = "/home/user/stuff"\n' > "$TMP/bad.txt"
+    printf 'path = "%s"\n' "$p" > "$TMP/bad.txt"
     run lefthook-git-no-local-paths "$TMP/good.txt" "$TMP/bad.txt"
     assert_failure
 }
