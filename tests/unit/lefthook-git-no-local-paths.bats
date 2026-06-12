@@ -44,6 +44,20 @@ setup() {
     assert_failure
 }
 
+@test "file with tmp path fails" {
+    p="/tmp""/scratch/project"
+    printf 'dir = "%s"\n' "$p" > "$TMP/bad.txt"
+    run lefthook-git-no-local-paths "$TMP/bad.txt"
+    assert_failure
+}
+
+@test "flake.lock local path: input fails" {
+    p="/tmp""/nix-lefthook"
+    printf '"path": "%s",\n        "type": "path"\n' "$p" > "$TMP/flake.lock"
+    run lefthook-git-no-local-paths "$TMP/flake.lock"
+    assert_failure
+}
+
 @test "nolocalpath comment suppresses detection" {
     p="/User""s/example/path"
     printf 'url = "%s"; # nolocalpath\n' "$p" > "$TMP/ok.nix"
