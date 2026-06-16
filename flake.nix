@@ -9,19 +9,71 @@
   inputs = {
     nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
     nixpkgs.follows = "nixpkgs-lock/nixpkgs";
-    nix-dev-shell-agentic = {
-      url = "github:pr0d1r2/nix-dev-shell-agentic";
-      inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-lefthook-nixfmt-src = {
+      url = "github:pr0d1r2/nix-lefthook-nixfmt";
+      flake = false;
+    };
+    nix-lefthook-shellcheck-src = {
+      url = "github:pr0d1r2/nix-lefthook-shellcheck";
+      flake = false;
+    };
+    nix-lefthook-shfmt-src = {
+      url = "github:pr0d1r2/nix-lefthook-shfmt";
+      flake = false;
+    };
+    nix-lefthook-statix-src = {
+      url = "github:pr0d1r2/nix-lefthook-statix";
+      flake = false;
+    };
+    nix-lefthook-deadnix-src = {
+      url = "github:pr0d1r2/nix-lefthook-deadnix";
+      flake = false;
+    };
+    nix-lefthook-bats-parse-src = {
+      url = "github:pr0d1r2/nix-lefthook-bats-parse";
+      flake = false;
+    };
+    nix-lefthook-bats-unit-src = {
+      url = "github:pr0d1r2/nix-lefthook-bats-unit";
+      flake = false;
+    };
+    nix-lefthook-yamllint-src = {
+      url = "github:pr0d1r2/nix-lefthook-yamllint";
+      flake = false;
+    };
+    nix-lefthook-typos-src = {
+      url = "github:pr0d1r2/nix-lefthook-typos";
+      flake = false;
+    };
+    nix-lefthook-editorconfig-checker-src = {
+      url = "github:pr0d1r2/nix-lefthook-editorconfig-checker";
+      flake = false;
+    };
+    nix-lefthook-git-conflict-markers-src = {
+      url = "github:pr0d1r2/nix-lefthook-git-conflict-markers";
+      flake = false;
+    };
+    nix-lefthook-missing-final-newline-src = {
+      url = "github:pr0d1r2/nix-lefthook-missing-final-newline";
+      flake = false;
+    };
+    nix-lefthook-trailing-whitespace-src = {
+      url = "github:pr0d1r2/nix-lefthook-trailing-whitespace";
+      flake = false;
+    };
+    nix-lefthook-nix-no-embedded-shell-src = {
+      url = "github:pr0d1r2/nix-lefthook-nix-no-embedded-shell";
+      flake = false;
+    };
+    nix-lefthook-file-size-check-src = {
+      url = "github:pr0d1r2/nix-lefthook-file-size-check";
+      flake = false;
     };
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nix-dev-shell-agentic,
-      ...
-    }@inputs:
+    inputs@{ self, nixpkgs, ... }:
     let
       supportedSystems = [
         "aarch64-darwin"
@@ -31,6 +83,14 @@
       ];
       forAllSystems =
         f: nixpkgs.lib.genAttrs supportedSystems (system: f nixpkgs.legacyPackages.${system});
+
+      batsWithLibsFor =
+        pkgs:
+        pkgs.bats.withLibraries (p: [
+          p.bats-support
+          p.bats-assert
+          p.bats-file
+        ]);
     in
     {
       packages = forAllSystems (pkgs: {
@@ -45,17 +105,31 @@
         pkgs:
         let
           inherit (pkgs.stdenv.hostPlatform) system;
-          shells = nix-dev-shell-agentic.lib.mkShells {
-            inherit pkgs inputs;
-            ciPackages = [
-              self.packages.${system}.default
-            ];
-            shellHook = builtins.replaceStrings [ "@BATS_LIB_PATH@" ] [ "${shells.batsWithLibs}" ] (
+          batsWithLibs = batsWithLibsFor pkgs;
+          ciPackages = [
+            self.packages.${system}.default
+          ]
+          ++ (import ./nix/lefthook-wrappers.nix { inherit pkgs inputs; })
+          ++ [
+            pkgs.coreutils
+            pkgs.git
+            pkgs.lefthook
+            pkgs.nix
+            batsWithLibs
+          ];
+        in
+        {
+          ci = pkgs.mkShell {
+            packages = ciPackages;
+            BATS_LIB_PATH = "${batsWithLibs}/share/bats";
+          };
+          default = pkgs.mkShell {
+            packages = ciPackages ++ [ pkgs.gh ];
+            shellHook = builtins.replaceStrings [ "@BATS_LIB_PATH@" ] [ "${batsWithLibs}" ] (
               builtins.readFile ./dev.sh
             );
           };
-        in
-        shells
+        }
       );
     };
 }
