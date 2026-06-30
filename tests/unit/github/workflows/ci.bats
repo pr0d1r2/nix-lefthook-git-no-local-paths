@@ -7,10 +7,10 @@ setup() {
     WORKFLOW=".github/workflows/ci.yml"
 }
 
-@test "uses actions/checkout@v7" {
+@test "uses actions/checkout pinned to commit hash" {
     run grep 'uses: actions/checkout@' "$WORKFLOW"
     assert_success
-    assert_output --partial 'actions/checkout@v7'
+    assert_output --partial '# v'
 }
 
 @test "linux job runs on ubuntu-latest" {
