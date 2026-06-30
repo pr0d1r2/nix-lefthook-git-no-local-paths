@@ -75,7 +75,7 @@ pre-commit:
     git-no-local-paths:
       run: timeout ${LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT:-30} lefthook-git-no-local-paths {staged_files}
     nix-flake-check:
-      glob: "*.nix"
+      glob: "**/*.nix"
       run: timeout ${LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT:-60} nix flake check
     taplo-lint:
       glob: "**/*.toml"
@@ -87,7 +87,7 @@ pre-push:
     git-no-local-paths:
       run: timeout ${LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT:-30} lefthook-git-no-local-paths {push_files}
     nix-flake-check:
-      glob: "*.nix"
+      glob: "**/*.nix"
       run: timeout ${LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT:-60} nix flake check
     taplo-lint:
       glob: "**/*.toml"
