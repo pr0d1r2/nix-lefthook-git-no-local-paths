@@ -8,10 +8,10 @@ setup() {
     CI_WORKFLOW=".github/workflows/ci.yml"
 }
 
-@test "uses actions/checkout@v6" {
+@test "uses actions/checkout@v7" {
     run grep 'uses: actions/checkout@' "$WORKFLOW"
     assert_success
-    assert_output --partial 'actions/checkout@v6'
+    assert_output --partial 'actions/checkout@v7'
 }
 
 @test "checkout version matches ci.yml" {
