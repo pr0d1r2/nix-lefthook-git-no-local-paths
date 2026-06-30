@@ -21,3 +21,5 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pr0d1r2/nix-lefthook-ci-action@ce9a118b05e90e186dba48a82067adeed185f7d4
+        with:
+          flake-check-timeout: "300"
