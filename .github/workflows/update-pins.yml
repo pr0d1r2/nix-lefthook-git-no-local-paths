@@ -1,3 +1,4 @@
+---
 name: Update nixpkgs-lock pin
 
 on:
