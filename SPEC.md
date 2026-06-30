@@ -104,12 +104,10 @@ lefthook-git-no-local-paths [file ...]
    concatenates a `SCANNER=` shell assignment with `builtins.readFile`,
    producing inline shell in a Nix file. All other wrappers use pure
    `readFile`.
-3. **Checkout version drift**: `ci.yml` uses `actions/checkout@v6` while
-   `update-pins.yml` still uses `actions/checkout@v4`.
-4. **Missing markdownlint hook**: `.markdownlint.yml` is present but no
+3. **Missing markdownlint hook**: `.markdownlint.yml` is present but no
    lefthook command or remote enforces markdown linting, violating the
    "every file type needs a linter" invariant.
-5. **`# nolocalpath` is greedy**: the suppression is a post-filter
+4. **`# nolocalpath` is greedy**: the suppression is a post-filter
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
