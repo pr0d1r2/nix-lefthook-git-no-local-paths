@@ -59,6 +59,7 @@ lefthook-git-no-local-paths [file ...]
 |---|---|---|
 | `LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT` | `30` | Timeout (seconds) for the hook |
 | `LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT` | `60` | Timeout for `nix flake check` hook |
+| `LEFTHOOK_TAPLO_LINT_TIMEOUT` | `30` | Timeout for taplo TOML lint hook |
 | `BATS_LIB_PATH` | set by devShell | Path to bats helper libraries |
 
 ### Config files
