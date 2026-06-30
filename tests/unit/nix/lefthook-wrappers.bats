@@ -25,7 +25,8 @@ setup() {
 }
 
 @test "every flake lefthook input has a wrapper" {
-    inputs=$(grep 'nix-lefthook-.*-src' "$FLAKE" | grep 'url =' | sed 's/.*nix-lefthook-//' | sed 's/-src.*//' | sort)
+    inputs=$(grep 'nix-lefthook-.*-src' "$FLAKE" | sed 's/.*nix-lefthook-//' | sed 's/-src.*//' | sort -u)
+    [ -n "$inputs" ]
     for input in $inputs; do
         run grep -q "nix-lefthook-${input}-src" "$WRAPPERS"
         assert_success
