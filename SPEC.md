@@ -100,14 +100,7 @@ lefthook-git-no-local-paths [file ...]
    alphabetic and numeric prefixes but paths like `/tmp/.cache` still pass
    undetected. The same gap exists for `/Users/` and `/home/` (numeric
    usernames, though rare).
-2. **Embedded shell in nix wrapper**: `nix/lefthook-wrappers.nix` line 58
-   concatenates a `SCANNER=` shell assignment with `builtins.readFile`,
-   producing inline shell in a Nix file. All other wrappers use pure
-   `readFile`.
-3. **Missing markdownlint hook**: `.markdownlint.yml` is present but no
-   lefthook command or remote enforces markdown linting, violating the
-   "every file type needs a linter" invariant.
-4. **`# nolocalpath` is greedy**: the suppression is a post-filter
+2. **`# nolocalpath` is greedy**: the suppression is a post-filter
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
