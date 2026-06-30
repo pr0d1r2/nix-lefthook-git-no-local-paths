@@ -58,10 +58,12 @@ in
   (pkgs.writeShellApplication {
     name = "lefthook-nix-no-embedded-shell";
     runtimeInputs = [ pkgs.git ];
-    text = ''
-      SCANNER="${inputs.nix-lefthook-nix-no-embedded-shell-src}/scan-nix-no-embedded-shell.sh"
-    ''
-    + builtins.readFile "${inputs.nix-lefthook-nix-no-embedded-shell-src}/lefthook-nix-no-embedded-shell.sh";
+    text =
+      builtins.replaceStrings
+        [ "@SCANNER_PATH@" ]
+        [ "${inputs.nix-lefthook-nix-no-embedded-shell-src}/scan-nix-no-embedded-shell.sh" ]
+        (builtins.readFile ./lefthook-nix-no-embedded-shell-scanner.sh)
+      + builtins.readFile "${inputs.nix-lefthook-nix-no-embedded-shell-src}/lefthook-nix-no-embedded-shell.sh";
   })
   (
     let
