@@ -5,3 +5,4 @@ extensions:
   bats: 5120
   yml: 4096
   md: 8192
+  sh: 4096
