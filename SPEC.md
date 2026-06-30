@@ -50,7 +50,7 @@ lefthook-git-no-local-paths [file ...]
 /Users/[a-zA-Z]
 /home/[a-zA-Z]   # nolocalpath
 /root/  # nolocalpath
-/tmp/[a-zA-Z]
+/tmp/[a-zA-Z0-9]
 ```
 
 ### Environment variables
@@ -91,15 +91,15 @@ lefthook-git-no-local-paths [file ...]
 | `x` | T4 | Add bats tests for edge cases: binary files, files with only suppressed paths, empty files |
 | `x` | T5 | Align `actions/checkout` version in `update-pins.yml` (v4) with `ci.yml` (v6) |
 | `x` | T6 | Add bats test verifying that output includes filename and line number (`grep -HnE` format) |
-| `.` | T7 | Widen `/tmp/` regex to also catch numeric-prefixed temp dirs (currently requires `[a-zA-Z]` after the slash) |
+| `x` | T7 | Widen `/tmp/` regex to also catch numeric-prefixed temp dirs (currently requires `[a-zA-Z]` after the slash) |
 | `.` | T8 | Add `.envrc` `watch_file` entry for `config/lefthook/file_size_limits.yml` (used by file-size-check wrapper at runtime) |
 
 ## §B — Bugs / Known Issues
 
-1. **Regex gap on `/tmp/`**: the pattern `/tmp/[a-zA-Z]` requires an
-   alphabetic character immediately after the slash. Paths like
-   `/tmp/123-build` or `/tmp/.cache` pass undetected. The same gap exists
-   for `/Users/` and `/home/` (numeric usernames, though rare).
+1. **Regex gap on `/tmp/`**: the pattern `/tmp/[a-zA-Z0-9]` catches
+   alphabetic and numeric prefixes but paths like `/tmp/.cache` still pass
+   undetected. The same gap exists for `/Users/` and `/home/` (numeric
+   usernames, though rare).
 2. **Embedded shell in nix wrapper**: `nix/lefthook-wrappers.nix` line 58
    concatenates a `SCANNER=` shell assignment with `builtins.readFile`,
    producing inline shell in a Nix file. All other wrappers use pure

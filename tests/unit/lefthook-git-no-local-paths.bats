@@ -132,6 +132,20 @@ setup() {
     assert_failure
 }
 
+@test "file with numeric-prefixed tmp path fails" {
+    p="/tmp""/123-build/output"
+    printf 'dir = "%s"\n' "$p" > "$TMP/bad_tmp.txt"
+    run lefthook-git-no-local-paths "$TMP/bad_tmp.txt"
+    assert_failure
+}
+
+@test "file with numeric-prefixed tmp path suppressed passes" {
+    p="/tmp""/42-cache/data"
+    printf 'dir = "%s" # nolocalpath\n' "$p" > "$TMP/ok_tmp.txt"
+    run lefthook-git-no-local-paths "$TMP/ok_tmp.txt"
+    assert_success
+}
+
 @test "output includes filename and line number in grep -HnE format" {
     p="/home""/user/project"
     printf 'clean line\npath = "%s"\n' "$p" > "$TMP/format_check.txt"
