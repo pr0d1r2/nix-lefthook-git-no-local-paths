@@ -50,6 +50,10 @@
       url = "github:pr0d1r2/nix-lefthook-editorconfig-checker";
       flake = false;
     };
+    nix-lefthook-markdownlint-src = {
+      url = "github:pr0d1r2/nix-lefthook-markdownlint";
+      flake = false;
+    };
     nix-lefthook-git-conflict-markers-src = {
       url = "github:pr0d1r2/nix-lefthook-git-conflict-markers";
       flake = false;
