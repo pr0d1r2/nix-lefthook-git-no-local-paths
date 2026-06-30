@@ -49,7 +49,7 @@ lefthook-git-no-local-paths [file ...]
 ```text
 /Users/[a-zA-Z]
 /home/[a-zA-Z]   # nolocalpath
-/root/
+/root/  # nolocalpath
 /tmp/[a-zA-Z]
 ```
 
