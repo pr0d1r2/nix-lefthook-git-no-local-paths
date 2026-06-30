@@ -44,3 +44,8 @@ setup() {
     run grep '  yml:' "$LIMITS"
     assert_success
 }
+
+@test "covers sh extension" {
+    run grep '  sh:' "$LIMITS"
+    assert_success
+}
