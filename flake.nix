@@ -119,6 +119,7 @@
             pkgs.git
             pkgs.lefthook
             pkgs.nix
+            pkgs.taplo
             batsWithLibs
           ];
         in
