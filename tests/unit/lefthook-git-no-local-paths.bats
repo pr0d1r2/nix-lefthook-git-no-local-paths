@@ -146,6 +146,41 @@ setup() {
     assert_success
 }
 
+@test "file with dot-prefixed tmp path fails" {
+    p="/tmp""/.cache/build"
+    printf 'dir = "%s"\n' "$p" > "$TMP/dot_tmp.txt"
+    run lefthook-git-no-local-paths "$TMP/dot_tmp.txt"
+    assert_failure
+}
+
+@test "file with dot-prefixed home path fails" {
+    p="/home""/.local/share"
+    printf 'dir = "%s"\n' "$p" > "$TMP/dot_home.txt"
+    run lefthook-git-no-local-paths "$TMP/dot_home.txt"
+    assert_failure
+}
+
+@test "file with dot-prefixed Users path fails" {
+    p="/User""s/.hidden/project"
+    printf 'dir = "%s"\n' "$p" > "$TMP/dot_users.txt"
+    run lefthook-git-no-local-paths "$TMP/dot_users.txt"
+    assert_failure
+}
+
+@test "file with numeric home username fails" {
+    p="/home""/1000/documents"
+    printf 'path = "%s"\n' "$p" > "$TMP/num_home.txt"
+    run lefthook-git-no-local-paths "$TMP/num_home.txt"
+    assert_failure
+}
+
+@test "file with numeric Users username fails" {
+    p="/User""s/42/projects"
+    printf 'path = "%s"\n' "$p" > "$TMP/num_users.txt"
+    run lefthook-git-no-local-paths "$TMP/num_users.txt"
+    assert_failure
+}
+
 @test "output includes filename and line number in grep -HnE format" {
     p="/home""/user/project"
     printf 'clean line\npath = "%s"\n' "$p" > "$TMP/format_check.txt"

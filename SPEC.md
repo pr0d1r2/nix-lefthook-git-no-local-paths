@@ -47,10 +47,10 @@ lefthook-git-no-local-paths [file ...]
 ### Detected patterns (ERE)
 
 ```text
-/Users/[a-zA-Z]
-/home/[a-zA-Z]   # nolocalpath
+/Users/[a-zA-Z0-9.]
+/home/[a-zA-Z0-9.]   # nolocalpath
 /root/  # nolocalpath
-/tmp/[a-zA-Z0-9]
+/tmp/[a-zA-Z0-9.]
 ```
 
 ### Environment variables
@@ -97,13 +97,7 @@ lefthook-git-no-local-paths [file ...]
 
 ## §B — Bugs / Known Issues
 
-1. **Regex gap on dot-prefixed and numeric paths**: paths starting with
-   a dot after the prefix (e.g. `/tmp/.cache`, `/home/.local`,
-   `/Users/.hidden`) pass undetected because the character class after
-   each prefix does not include `.`. The `/Users/` and `/home/` patterns
-   also miss numeric usernames (e.g. `/home/1000`) since they use
-   `[a-zA-Z]` rather than `[a-zA-Z0-9]`.
-2. **`# nolocalpath` is greedy**: the suppression is a post-filter
+1. **`# nolocalpath` is greedy**: the suppression is a post-filter
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.

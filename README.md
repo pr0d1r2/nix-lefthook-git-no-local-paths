@@ -6,7 +6,7 @@
 
 Lefthook-compatible local filesystem path detector, packaged as a Nix flake.
 
-Detects hardcoded local paths (`/Users/`, `/home/`, `/root/`, `/tmp/`) in staged files to prevent leaking development environment details — including local-override `path:` inputs in a committed `flake.lock` (e.g. `/tmp/<repo>`), which break CI where that path does not exist. Add `# nolocalpath` to a line to suppress the check. Exits 0 when no files are found or no local paths are detected.
+Detects hardcoded local paths (`/Users/`, `/home/`, `/root/`, `/tmp/`) in staged files to prevent leaking development environment details — including local-override `path:` inputs in a committed `flake.lock` (e.g. `/tmp/<repo>`), which break CI where that path does not exist. Covers alphanumeric and dot-prefixed paths (e.g. `/home/1000`, `/tmp/.cache`). Add `# nolocalpath` to a line to suppress the check. Exits 0 when no files are found or no local paths are detected.
 
 ## Usage
 

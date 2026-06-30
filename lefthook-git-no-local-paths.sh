@@ -19,7 +19,7 @@ fi
 
 found=0
 for f in "${files[@]}"; do
-  if grep -HnE '/Users/[a-zA-Z]|/home/[a-zA-Z]|/root/|/tmp/[a-zA-Z0-9]' "$f" | grep -v '# nolocalpath'; then
+  if grep -HnE '/Users/[a-zA-Z0-9.]|/home/[a-zA-Z0-9.]|/root/|/tmp/[a-zA-Z0-9.]' "$f" | grep -v '# nolocalpath'; then
     found=1
   fi
 done
