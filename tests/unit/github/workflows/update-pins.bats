@@ -41,9 +41,10 @@ setup() {
     assert_success
 }
 
-@test "uses cachix/install-nix-action" {
+@test "uses cachix/install-nix-action pinned to commit hash" {
     run grep 'cachix/install-nix-action@' "$WORKFLOW"
     assert_success
+    assert_output --partial '# v'
 }
 
 @test "runs nix flake update nixpkgs-lock" {
@@ -56,9 +57,10 @@ setup() {
     assert_success
 }
 
-@test "uses peter-evans/create-pull-request" {
+@test "uses peter-evans/create-pull-request pinned to commit hash" {
     run grep 'peter-evans/create-pull-request@' "$WORKFLOW"
     assert_success
+    assert_output --partial '# v'
 }
 
 @test "triggers on workflow_dispatch" {
