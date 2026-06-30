@@ -72,3 +72,62 @@ setup() {
     run lefthook-git-no-local-paths "$TMP/good.txt" "$TMP/bad.txt"
     assert_failure
 }
+
+@test "empty file passes" {
+    touch "$TMP/empty.txt"
+    run lefthook-git-no-local-paths "$TMP/empty.txt"
+    assert_success
+    assert_output ""
+}
+
+@test "binary file without local paths passes" {
+    printf '\x00\x01\x02\x03\x04\x05' > "$TMP/binary.bin"
+    run lefthook-git-no-local-paths "$TMP/binary.bin"
+    assert_success
+}
+
+@test "binary file with embedded local path passes" {
+    p="/home""/user/something"
+    printf '\x00\x01%s\x00\x02' "$p" > "$TMP/binary_bad.bin"
+    run lefthook-git-no-local-paths "$TMP/binary_bad.bin"
+    assert_success
+}
+
+@test "file with only suppressed paths passes" {
+    p1="/home""/dev/src"
+    p2="/User""s/john/proj"
+    {
+        printf '%s # nolocalpath\n' "$p1"
+        printf '%s # nolocalpath\n' "$p2"
+    } > "$TMP/suppressed.txt"
+    run lefthook-git-no-local-paths "$TMP/suppressed.txt"
+    assert_success
+    assert_output ""
+}
+
+@test "file with all four pattern types suppressed passes" {
+    p1="/User""s/ann/work"
+    p2="/home""/dev/src"
+    p3="/root""/.config"
+    p4="/tmp""/scratch"
+    {
+        printf '%s # nolocalpath\n' "$p1"
+        printf '%s # nolocalpath\n' "$p2"
+        printf '%s # nolocalpath\n' "$p3"
+        printf '%s # nolocalpath\n' "$p4"
+    } > "$TMP/all_suppressed.txt"
+    run lefthook-git-no-local-paths "$TMP/all_suppressed.txt"
+    assert_success
+    assert_output ""
+}
+
+@test "file with mixed suppressed and unsuppressed paths fails" {
+    p1="/home""/dev/src"
+    p2="/User""s/john/proj"
+    {
+        printf '%s # nolocalpath\n' "$p1"
+        printf '%s\n' "$p2"
+    } > "$TMP/mixed.txt"
+    run lefthook-git-no-local-paths "$TMP/mixed.txt"
+    assert_failure
+}
