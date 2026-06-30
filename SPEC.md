@@ -12,7 +12,7 @@ with a `# nolocalpath` inline comment.
 
 1. The flake must build and pass `nix flake check` on all four supported
    platforms: aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux.
-2. All bats unit tests (`tests/unit/*.bats`) must pass in the CI devShell.
+2. All bats unit tests (`tests/unit/**/*.bats`) must pass in the CI devShell.
 3. Every shell script has a corresponding bats test file under `tests/unit/`.
 4. The main script exits 0 when given no arguments or only non-existent files.
 5. The main script exits 1 when any scanned file contains a local path not

@@ -62,14 +62,14 @@ The repo includes an `.envrc` for [direnv](https://direnv.net/) — entering the
 
 ```bash
 cd nix-lefthook-git-no-local-paths  # direnv loads the flake
-bats tests/unit/
+bats -r tests/unit/
 ```
 
 If not using direnv, enter the shell manually:
 
 ```bash
 nix develop
-bats tests/unit/
+bats -r tests/unit/
 ```
 
 ## License
