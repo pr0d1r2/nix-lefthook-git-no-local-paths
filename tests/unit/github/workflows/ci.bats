@@ -59,3 +59,8 @@ setup() {
     run grep 'workflow_dispatch' "$WORKFLOW"
     assert_success
 }
+
+@test "macos job sets flake-check-timeout" {
+    run bash -c "sed -n '/build-macos:/,\$p' '$WORKFLOW' | grep 'flake-check-timeout'"
+    assert_success
+}
