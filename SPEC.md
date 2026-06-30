@@ -92,7 +92,7 @@ lefthook-git-no-local-paths [file ...]
 | `x` | T5 | Align `actions/checkout` version in `update-pins.yml` (v4) with `ci.yml` (v6) |
 | `x` | T6 | Add bats test verifying that output includes filename and line number (`grep -HnE` format) |
 | `x` | T7 | Widen `/tmp/` regex to also catch numeric-prefixed temp dirs (currently requires `[a-zA-Z]` after the slash) |
-| `.` | T8 | Add `.envrc` `watch_file` entry for `config/lefthook/file_size_limits.yml` (used by file-size-check wrapper at runtime) |
+| `x` | T8 | Add `.envrc` `watch_file` entry for `config/lefthook/file_size_limits.yml` (used by file-size-check wrapper at runtime) |
 
 ## §B — Bugs / Known Issues
 
