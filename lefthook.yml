@@ -77,6 +77,9 @@ pre-commit:
     nix-flake-check:
       glob: "*.nix"
       run: timeout ${LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT:-60} nix flake check
+    taplo-lint:
+      glob: "**/*.toml"
+      run: timeout ${LEFTHOOK_TAPLO_LINT_TIMEOUT:-30} taplo check {staged_files}
 
 pre-push:
   parallel: true
@@ -86,3 +89,6 @@ pre-push:
     nix-flake-check:
       glob: "*.nix"
       run: timeout ${LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT:-60} nix flake check
+    taplo-lint:
+      glob: "**/*.toml"
+      run: timeout ${LEFTHOOK_TAPLO_LINT_TIMEOUT:-30} taplo check {all_files}
