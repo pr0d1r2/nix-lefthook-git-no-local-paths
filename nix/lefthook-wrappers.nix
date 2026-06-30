@@ -45,6 +45,9 @@ in
   (wrap "lefthook-editorconfig-checker" inputs.nix-lefthook-editorconfig-checker-src {
     runtimeInputs = [ pkgs.editorconfig-checker ];
   })
+  (wrap "lefthook-markdownlint" inputs.nix-lefthook-markdownlint-src {
+    runtimeInputs = [ pkgs.markdownlint-cli ];
+  })
   (wrap "lefthook-git-conflict-markers" inputs.nix-lefthook-git-conflict-markers-src {
     runtimeInputs = [ pkgs.gnugrep ];
   })

@@ -85,7 +85,7 @@ lefthook-git-no-local-paths [file ...]
 
 | status | id | goal |
 |---|---|---|
-| `.` | T1 | Add markdownlint lefthook remote — `.markdownlint.yml` config exists but no lefthook check enforces it |
+| `x` | T1 | Add markdownlint lefthook remote — `.markdownlint.yml` config exists but no lefthook check enforces it |
 | `.` | T2 | Add TOML linter for `.rtk/filters.toml` (linter rule: every tracked file type needs a linter) |
 | `.` | T3 | Extract inline shell from `lefthook-nix-no-embedded-shell` wrapper in `nix/lefthook-wrappers.nix` (the `SCANNER=` line is embedded shell unlike all other wrappers) |
 | `.` | T4 | Add bats tests for edge cases: binary files, files with only suppressed paths, empty files |

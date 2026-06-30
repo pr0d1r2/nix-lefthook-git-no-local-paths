@@ -96,6 +96,22 @@
         "type": "github"
       }
     },
+    "nix-lefthook-markdownlint-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780976649,
+        "narHash": "sha256-qQScYDAeWQioMIE6HJVxvqP6aNY5aCML3WTylybs+P8=",
+        "owner": "pr0d1r2",
+        "repo": "nix-lefthook-markdownlint",
+        "rev": "c4843dc4df39572b63350ff87ff012a130a202e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pr0d1r2",
+        "repo": "nix-lefthook-markdownlint",
+        "type": "github"
+      }
+    },
     "nix-lefthook-missing-final-newline-src": {
       "flake": false,
       "locked": {
@@ -282,6 +298,7 @@
         "nix-lefthook-editorconfig-checker-src": "nix-lefthook-editorconfig-checker-src",
         "nix-lefthook-file-size-check-src": "nix-lefthook-file-size-check-src",
         "nix-lefthook-git-conflict-markers-src": "nix-lefthook-git-conflict-markers-src",
+        "nix-lefthook-markdownlint-src": "nix-lefthook-markdownlint-src",
         "nix-lefthook-missing-final-newline-src": "nix-lefthook-missing-final-newline-src",
         "nix-lefthook-nix-no-embedded-shell-src": "nix-lefthook-nix-no-embedded-shell-src",
         "nix-lefthook-nixfmt-src": "nix-lefthook-nixfmt-src",
