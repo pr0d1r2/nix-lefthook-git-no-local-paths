@@ -131,3 +131,11 @@ setup() {
     run lefthook-git-no-local-paths "$TMP/mixed.txt"
     assert_failure
 }
+
+@test "output includes filename and line number in grep -HnE format" {
+    p="/home""/user/project"
+    printf 'clean line\npath = "%s"\n' "$p" > "$TMP/format_check.txt"
+    run lefthook-git-no-local-paths "$TMP/format_check.txt"
+    assert_failure
+    assert_line --partial "${TMP}/format_check.txt:2:"
+}
