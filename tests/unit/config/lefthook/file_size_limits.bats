@@ -49,3 +49,8 @@ setup() {
     run grep '  sh:' "$LIMITS"
     assert_success
 }
+
+@test "covers toml extension" {
+    run grep '  toml:' "$LIMITS"
+    assert_success
+}

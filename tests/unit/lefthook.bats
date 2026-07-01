@@ -89,3 +89,24 @@ setup() {
     assert_success
     assert_output --partial '*.toml'
 }
+
+@test "every flake lefthook input has a remote" {
+    inputs=$(grep 'nix-lefthook-.*-src' "$PROJECT_ROOT/flake.nix" | sed 's/.*nix-lefthook-//' | sed 's/-src.*//' | sort -u)
+    [ -n "$inputs" ]
+    for input in $inputs; do
+        run grep -q "nix-lefthook-${input}" "$LEFTHOOK"
+        assert_success
+    done
+}
+
+@test "taplo-lint pre-commit uses staged_files" {
+    run bash -c "sed -n '/^pre-commit:/,/^pre-push:/p' '$LEFTHOOK' | grep 'taplo' | grep 'run:'"
+    assert_success
+    assert_output --partial '{staged_files}'
+}
+
+@test "taplo-lint pre-push uses all_files" {
+    run bash -c "sed -n '/^pre-push:/,\$p' '$LEFTHOOK' | grep 'taplo' | grep 'run:'"
+    assert_success
+    assert_output --partial '{all_files}'
+}
