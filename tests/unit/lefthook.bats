@@ -89,3 +89,15 @@ setup() {
     assert_success
     assert_output --partial '*.toml'
 }
+
+@test "taplo-lint pre-commit uses staged_files" {
+    run bash -c "sed -n '/^pre-commit:/,/^pre-push:/p' '$LEFTHOOK' | grep 'taplo' | grep 'run:'"
+    assert_success
+    assert_output --partial '{staged_files}'
+}
+
+@test "taplo-lint pre-push uses all_files" {
+    run bash -c "sed -n '/^pre-push:/,\$p' '$LEFTHOOK' | grep 'taplo' | grep 'run:'"
+    assert_success
+    assert_output --partial '{all_files}'
+}
