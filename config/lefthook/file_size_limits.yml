@@ -7,3 +7,4 @@ extensions:
   yml: 4096
   md: 8192
   sh: 4096
+  toml: 4096
