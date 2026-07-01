@@ -181,6 +181,13 @@ setup() {
     assert_failure
 }
 
+@test "file with leading dash in name containing local path fails" {
+    p="/home""/user/project"
+    printf 'path = "%s"\n' "$p" > "$TMP/-dashed.txt"
+    run bash -c 'cd "$1" && lefthook-git-no-local-paths -dashed.txt' -- "$TMP"
+    assert_failure
+}
+
 @test "output includes filename and line number in grep -HnE format" {
     p="/home""/user/project"
     printf 'clean line\npath = "%s"\n' "$p" > "$TMP/format_check.txt"
