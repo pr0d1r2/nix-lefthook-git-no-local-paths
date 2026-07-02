@@ -47,10 +47,10 @@ lefthook-git-no-local-paths [file ...]
 ### Detected patterns (ERE)
 
 ```text
-/Users/[a-zA-Z0-9.]
-/home/[a-zA-Z0-9.]
+/Users/[a-zA-Z0-9._-]
+/home/[a-zA-Z0-9._-]
 /root/  # nolocalpath
-/tmp/[a-zA-Z0-9.]
+/tmp/[a-zA-Z0-9._-]
 ```
 
 ### Environment variables
@@ -101,8 +101,3 @@ lefthook-git-no-local-paths [file ...]
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
-2. **Underscore/hyphen-prefixed paths not detected**: the character
-   class after `/Users/`, `/home/`, and `/tmp/` is `[a-zA-Z0-9.]`, so
-   paths like `/home/_service/app` or `/tmp/-build/out` slip through.
-   macOS system accounts use underscore prefixes (e.g. `_www`), and some
-   build tools create underscore- or hyphen-prefixed temp directories.

@@ -188,6 +188,48 @@ setup() {
     assert_failure
 }
 
+@test "file with underscore-prefixed Users path fails" {
+    p="/User""s/_www/sites"
+    printf 'dir = "%s"\n' "$p" > "$TMP/underscore_users.txt"
+    run lefthook-git-no-local-paths "$TMP/underscore_users.txt"
+    assert_failure
+}
+
+@test "file with underscore-prefixed home path fails" {
+    p="/home""/_service/app"
+    printf 'dir = "%s"\n' "$p" > "$TMP/underscore_home.txt"
+    run lefthook-git-no-local-paths "$TMP/underscore_home.txt"
+    assert_failure
+}
+
+@test "file with underscore-prefixed tmp path fails" {
+    p="/tmp""/_build/output"
+    printf 'dir = "%s"\n' "$p" > "$TMP/underscore_tmp.txt"
+    run lefthook-git-no-local-paths "$TMP/underscore_tmp.txt"
+    assert_failure
+}
+
+@test "file with hyphen-prefixed tmp path fails" {
+    p="/tmp""/-build/out"
+    printf 'dir = "%s"\n' "$p" > "$TMP/hyphen_tmp.txt"
+    run lefthook-git-no-local-paths "$TMP/hyphen_tmp.txt"
+    assert_failure
+}
+
+@test "file with hyphen-prefixed home path fails" {
+    p="/home""/-user/data"
+    printf 'dir = "%s"\n' "$p" > "$TMP/hyphen_home.txt"
+    run lefthook-git-no-local-paths "$TMP/hyphen_home.txt"
+    assert_failure
+}
+
+@test "file with underscore-prefixed path suppressed passes" {
+    p="/home""/_service/app"
+    printf 'dir = "%s" # nolocalpath\n' "$p" > "$TMP/ok_underscore.txt"
+    run lefthook-git-no-local-paths "$TMP/ok_underscore.txt"
+    assert_success
+}
+
 @test "output includes filename and line number in grep -HnE format" {
     p="/home""/user/project"
     printf 'clean line\npath = "%s"\n' "$p" > "$TMP/format_check.txt"
