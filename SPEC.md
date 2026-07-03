@@ -101,3 +101,7 @@ lefthook-git-no-local-paths [file ...]
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
+2. **Orphaned `update-pins.bats` after workflow removal** (2026-07-03):
+   commit `6f22572` dropped `.github/workflows/update-pins.yml` but left
+   `tests/unit/github/workflows/update-pins.bats`, causing 11 test
+   failures in CI. Fix: removed the orphaned test file.
