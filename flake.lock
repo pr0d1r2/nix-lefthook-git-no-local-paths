@@ -243,11 +243,11 @@
     "nix-lefthook-yamllint-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1780983364,
-        "narHash": "sha256-NzF2nt32w4f5tlNDGkaZAOHBtt0OmNcpnQ9aDiqetF4=",
+        "lastModified": 1783060032,
+        "narHash": "sha256-Q9PHmDEW20/Sn2q1KLa5xDuTuxvhuWci6nt7OS4fYIc=",
         "owner": "pr0d1r2",
         "repo": "nix-lefthook-yamllint",
-        "rev": "fbd0497ae8df6f80233b8e8178f5ff71c9673170",
+        "rev": "fd99660e81a2d57afcc3335233ad2edb15905167",
         "type": "github"
       },
       "original": {
