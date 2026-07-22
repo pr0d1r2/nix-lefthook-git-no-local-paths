@@ -64,7 +64,7 @@ setup() {
 }
 
 @test "uses readFile for main script" {
-    run grep 'builtins.readFile ./lefthook-git-no-local-paths.sh' "$FLAKE"
+    run grep 'builtins.readFile ../lefthook-git-no-local-paths.sh' "$PROJECT_ROOT/nix/package.nix"
     assert_success
 }
 

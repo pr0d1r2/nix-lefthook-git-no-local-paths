@@ -33,6 +33,18 @@ setup() {
     done
 }
 
+@test "every configured lefthook executable is provided by the dev shell" {
+    executables=$(sed -n 's/.*timeout \${[^}]*} \([^ {]*\).*/\1/p' "$PROJECT_ROOT/lefthook.yml" | sort -u)
+    [ -n "$executables" ]
+    for executable in $executables; do
+        case "$executable" in
+            lefthook-git-no-local-paths|nix|taplo|bats) continue ;;
+        esac
+        run grep -q "name = \"$executable\"\|wrap \"$executable\"" "$WRAPPERS"
+        assert_success
+    done
+}
+
 @test "no embedded shell text assignments" {
     run bash -c "grep -c 'text = \"' '$WRAPPERS'"
     assert_failure

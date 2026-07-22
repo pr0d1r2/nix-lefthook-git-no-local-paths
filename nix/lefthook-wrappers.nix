@@ -48,6 +48,25 @@ in
   (wrap "lefthook-markdownlint" inputs.nix-lefthook-markdownlint-src {
     runtimeInputs = [ pkgs.markdownlint-cli ];
   })
+  (
+    let
+      src = inputs.nix-lefthook-markdownlint-agentic-src;
+      is-markdown-agentic = pkgs.writeShellApplication {
+        name = "is-markdown-agentic";
+        text = builtins.readFile "${src}/is-markdown-agentic.sh";
+      };
+    in
+    pkgs.writeShellApplication {
+      name = "lefthook-markdownlint-agentic";
+      runtimeInputs = [
+        pkgs.markdownlint-cli
+        is-markdown-agentic
+      ];
+      text =
+        builtins.replaceStrings [ "@MARKDOWNLINT_AGENTIC_CONFIG@" ] [ "${src}/.markdownlint-agentic.yml" ]
+          (builtins.readFile "${src}/lefthook-markdownlint-agentic.sh");
+    }
+  )
   (wrap "lefthook-git-conflict-markers" inputs.nix-lefthook-git-conflict-markers-src {
     runtimeInputs = [ pkgs.gnugrep ];
   })

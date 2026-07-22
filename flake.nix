@@ -57,6 +57,10 @@
       url = "github:pr0d1r2/nix-lefthook-markdownlint";
       flake = false;
     };
+    nix-lefthook-markdownlint-agentic-src = {
+      url = "github:pr0d1r2/nix-lefthook-markdownlint-agentic";
+      flake = false;
+    };
     nix-lefthook-git-conflict-markers-src = {
       url = "github:pr0d1r2/nix-lefthook-git-conflict-markers";
       flake = false;
@@ -95,11 +99,7 @@
     in
     {
       packages = forAllSystems (pkgs: {
-        default = pkgs.writeShellApplication {
-          name = "lefthook-git-no-local-paths";
-          runtimeInputs = [ pkgs.gnugrep ];
-          text = builtins.readFile ./lefthook-git-no-local-paths.sh;
-        };
+        default = import ./nix/package.nix pkgs;
       });
 
       checks = import ./nix/checks.nix forAllSystems set-and-setting ./.;
