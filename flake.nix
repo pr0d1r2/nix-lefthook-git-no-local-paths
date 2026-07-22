@@ -10,6 +10,9 @@
     nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
     nixpkgs.follows = "nixpkgs-lock/nixpkgs";
 
+    set-and-setting.url = "github:pr0d1r2/set-and-setting";
+    set-and-setting.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-lefthook-nixfmt-src = {
       url = "github:pr0d1r2/nix-lefthook-nixfmt";
       flake = false;
@@ -77,24 +80,18 @@
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    inputs@{
+      self,
+      nixpkgs,
+      set-and-setting,
+      ...
+    }:
     let
-      supportedSystems = [
-        "aarch64-darwin"
-        "x86_64-darwin"
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
+      supportedSystems = import ./nix/systems.nix;
       forAllSystems =
         f: nixpkgs.lib.genAttrs supportedSystems (system: f nixpkgs.legacyPackages.${system});
 
-      batsWithLibsFor =
-        pkgs:
-        pkgs.bats.withLibraries (p: [
-          p.bats-support
-          p.bats-assert
-          p.bats-file
-        ]);
+      batsWithLibsFor = import ./nix/bats-with-libs.nix;
     in
     {
       packages = forAllSystems (pkgs: {
@@ -104,6 +101,8 @@
           text = builtins.readFile ./lefthook-git-no-local-paths.sh;
         };
       });
+
+      checks = import ./nix/checks.nix forAllSystems set-and-setting ./.;
 
       devShells = forAllSystems (
         pkgs:
