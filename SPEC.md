@@ -101,3 +101,7 @@ lefthook-git-no-local-paths [file ...]
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
+2. **2026-07-22 — Lint configurations drifted from their tested policy**:
+   markdownlint and yamllint overrides were partially replaced by stricter
+   defaults that the repository content does not follow. The expected rule
+   overrides were restored without weakening or changing the tests.
