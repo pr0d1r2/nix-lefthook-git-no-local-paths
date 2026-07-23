@@ -18,6 +18,11 @@ setup() {
     assert_success
 }
 
+@test ".envrc watches nix/package.nix" {
+    run grep -q '^watch_file nix/package.nix$' "$ENVRC"
+    assert_success
+}
+
 @test ".envrc watches nix/lefthook-nix-no-embedded-shell-scanner.sh" {
     run grep -q '^watch_file nix/lefthook-nix-no-embedded-shell-scanner.sh$' "$ENVRC"
     assert_success

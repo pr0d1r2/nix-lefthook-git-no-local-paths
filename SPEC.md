@@ -101,3 +101,11 @@ lefthook-git-no-local-paths [file ...]
    (`grep -v`), so it fires on any matching line that also contains the
    string `# nolocalpath` anywhere — including inside string literals or
    unrelated comments.
+2. **2026-07-22 — Lint configurations drifted from their tested policy**:
+   markdownlint and yamllint overrides were partially replaced by stricter
+   defaults that the repository content does not follow. The expected rule
+   overrides were restored without weakening or changing the tests.
+3. **2026-07-22 — Agentic markdownlint executable missing from CI**:
+   `lefthook.yml` invoked `lefthook-markdownlint-agentic`, but the CI dev shell
+   did not package that executable. Its source input and wrapper were added,
+   with a test that maps every configured hook executable to the dev shell.

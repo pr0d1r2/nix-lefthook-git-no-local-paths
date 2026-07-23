@@ -6,31 +6,46 @@ setup() {
 
     PROJECT_ROOT="$BATS_TEST_DIRNAME/../.."
     FLAKE="$PROJECT_ROOT/flake.nix"
+    CHECKS="$PROJECT_ROOT/nix/checks.nix"
+    SYSTEMS="$PROJECT_ROOT/nix/systems.nix"
 }
 
 @test "supports aarch64-darwin" {
-    run grep 'aarch64-darwin' "$FLAKE"
+    run grep 'aarch64-darwin' "$SYSTEMS"
     assert_success
 }
 
 @test "supports x86_64-darwin" {
-    run grep 'x86_64-darwin' "$FLAKE"
+    run grep 'x86_64-darwin' "$SYSTEMS"
     assert_success
 }
 
 @test "supports x86_64-linux" {
-    run grep 'x86_64-linux' "$FLAKE"
+    run grep 'x86_64-linux' "$SYSTEMS"
     assert_success
 }
 
 @test "supports aarch64-linux" {
-    run grep 'aarch64-linux' "$FLAKE"
+    run grep 'aarch64-linux' "$SYSTEMS"
     assert_success
 }
 
 @test "has default package output" {
     run grep 'packages = forAllSystems' "$FLAKE"
     assert_success
+}
+
+@test "materializes standard checks for repository content" {
+    run grep 'import ./nix/checks.nix' "$FLAKE"
+    assert_success
+
+    run grep 'set-and-setting.lib.checksFor' "$CHECKS"
+    assert_success
+
+    for fragment in base nix shell markdown yaml; do
+        run grep "\"$fragment\"" "$CHECKS"
+        assert_success
+    done
 }
 
 @test "has ci devShell" {
@@ -49,7 +64,7 @@ setup() {
 }
 
 @test "uses readFile for main script" {
-    run grep 'builtins.readFile ./lefthook-git-no-local-paths.sh' "$FLAKE"
+    run grep 'builtins.readFile ../lefthook-git-no-local-paths.sh' "$PROJECT_ROOT/nix/package.nix"
     assert_success
 }
 

@@ -90,11 +90,12 @@ setup() {
     assert_output --partial '*.toml'
 }
 
-@test "every flake lefthook input has a remote" {
-    inputs=$(grep 'nix-lefthook-.*-src' "$PROJECT_ROOT/flake.nix" | sed 's/.*nix-lefthook-//' | sed 's/-src.*//' | sort -u)
-    [ -n "$inputs" ]
-    for input in $inputs; do
-        run grep -q "nix-lefthook-${input}" "$LEFTHOOK"
+@test "vendored checks are materialized by checksFor" {
+    run grep 'set-and-setting.lib.checksFor' "$PROJECT_ROOT/nix/checks.nix"
+    assert_success
+
+    for fragment in base nix shell; do
+        run grep "\"$fragment\"" "$PROJECT_ROOT/nix/checks.nix"
         assert_success
     done
 }
