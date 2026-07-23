@@ -109,3 +109,8 @@ lefthook-git-no-local-paths [file ...]
    `lefthook.yml` invoked `lefthook-markdownlint-agentic`, but the CI dev shell
    did not package that executable. Its source input and wrapper were added,
    with a test that maps every configured hook executable to the dev shell.
+4. **2026-07-23 — Referenced confirm app omitted fragment wrappers**:
+   the consumer migration used the standard `confirm` app, whose isolated
+   runtime omitted the hook executables required by the selected fragments.
+   The consumer now supplies a confirm app with the materialization packages
+   on its runtime path, so CI verifies coherence outside the development shell.
