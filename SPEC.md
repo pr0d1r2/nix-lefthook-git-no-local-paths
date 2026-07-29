@@ -114,3 +114,7 @@ lefthook-git-no-local-paths [file ...]
    runtime omitted the hook executables required by the selected fragments.
    The consumer now supplies a confirm app with the materialization packages
    on its runtime path, so CI verifies coherence outside the development shell.
+5. **2026-07-29 — Pin update pulled breaking set-and-setting rev**:
+   `nix flake update` advanced `set-and-setting` to rev `d2fa92cc` which
+   dropped the `lib` output (`mkConsumerFlake`, `materializationFor`).
+   Pinned `set-and-setting` back to `d0196d19`, the last rev exposing `lib`.
