@@ -561,7 +561,7 @@
           "nixpkgs-lock",
           "nixpkgs"
         ],
-        "nixpkgs-lock": "nixpkgs-lock_2"
+        "nixpkgs-lock": "nixpkgs-lock"
       },
       "locked": {
         "lastModified": 1785851148,

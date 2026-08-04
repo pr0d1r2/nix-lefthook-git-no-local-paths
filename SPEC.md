@@ -123,3 +123,7 @@ lefthook-git-no-local-paths [file ...]
    duplication across `set-and-setting` fragments. The `.lock` extension
    limit of 65536 in `config/lefthook/file_size_limits.yml` was too low.
    Raised to 196608 (192KB).
+7. **2026-08-04 — Flake manifest rejected output bindings**:
+   The flake-manifest guard rejected the `let` bindings used by `outputs`.
+   Inlined the consumer flake construction and used the recursive flake
+   outputs for the confirm app.
