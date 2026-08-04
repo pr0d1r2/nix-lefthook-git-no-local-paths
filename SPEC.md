@@ -123,3 +123,15 @@ lefthook-git-no-local-paths [file ...]
    duplication across `set-and-setting` fragments. The `.lock` extension
    limit of 65536 in `config/lefthook/file_size_limits.yml` was too low.
    Raised to 196608 (192KB).
+7. **2026-08-04 — Flake manifest rejected output bindings**:
+   The flake-manifest guard rejected the `let` bindings used by `outputs`.
+   Inlined the consumer flake construction and used the recursive flake
+   outputs for the confirm app.
+8. **2026-08-04 — Lock graph duplicated nixpkgs**:
+   The consumer's `set-and-setting` input retained a separate
+   `nixpkgs-lock` edge, producing two locked nixpkgs nodes and failing the
+   lock-graph guardrail. Made that input follow the root `nixpkgs-lock`.
+9. **2026-08-04 — Flake source was not nixfmt-formatted**:
+   The guardrails `nixfmt-check` rejected `flake.nix` after the consumer
+   output and confirm-app changes. Reformatted the list, runtime-input, and
+   nested-attribute layout with the repository's Nix formatter.
