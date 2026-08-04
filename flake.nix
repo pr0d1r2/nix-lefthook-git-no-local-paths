@@ -25,7 +25,14 @@
     }:
     set-and-setting.lib.mkConsumerFlake {
       inherit self nixpkgs set-and-setting;
-      fragments = [ "base" "nix" "shell" "ascii" "markdown" "yaml" ];
+      fragments = [
+        "base"
+        "nix"
+        "shell"
+        "ascii"
+        "markdown"
+        "yaml"
+      ];
       src = ./.;
     }
     // {
@@ -33,7 +40,14 @@
         system:
         (set-and-setting.lib.mkConsumerFlake {
           inherit self nixpkgs set-and-setting;
-          fragments = [ "base" "nix" "shell" "ascii" "markdown" "yaml" ];
+          fragments = [
+            "base"
+            "nix"
+            "shell"
+            "ascii"
+            "markdown"
+            "yaml"
+          ];
           src = ./.;
         }).apps.${system}
         // {
@@ -44,17 +58,26 @@
             program = "${
               nixpkgs.legacyPackages.${system}.writeShellApplication {
                 name = "confirm";
-                runtimeInputs = (set-and-setting.lib.materializationFor {
-                  pkgs = nixpkgs.legacyPackages.${system};
-                  fragments = [ "base" "nix" "shell" "ascii" "markdown" "yaml" ];
-                }).packages ++ [
-                  nixpkgs.legacyPackages.${system}.coreutils
-                  nixpkgs.legacyPackages.${system}.diffutils
-                  nixpkgs.legacyPackages.${system}.findutils
-                  nixpkgs.legacyPackages.${system}.gawk
-                  nixpkgs.legacyPackages.${system}.git
-                  nixpkgs.legacyPackages.${system}.gnugrep
-                ];
+                runtimeInputs =
+                  (set-and-setting.lib.materializationFor {
+                    pkgs = nixpkgs.legacyPackages.${system};
+                    fragments = [
+                      "base"
+                      "nix"
+                      "shell"
+                      "ascii"
+                      "markdown"
+                      "yaml"
+                    ];
+                  }).packages
+                  ++ [
+                    nixpkgs.legacyPackages.${system}.coreutils
+                    nixpkgs.legacyPackages.${system}.diffutils
+                    nixpkgs.legacyPackages.${system}.findutils
+                    nixpkgs.legacyPackages.${system}.gawk
+                    nixpkgs.legacyPackages.${system}.git
+                    nixpkgs.legacyPackages.${system}.gnugrep
+                  ];
                 text =
                   builtins.replaceStrings
                     [
@@ -74,7 +97,7 @@
                       (set-and-setting.rev or "unknown")
                     ]
                     (builtins.readFile ./nix/confirm.sh);
-    }
+              }
             }/bin/confirm";
           };
         }

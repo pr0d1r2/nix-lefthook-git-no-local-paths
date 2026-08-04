@@ -131,3 +131,7 @@ lefthook-git-no-local-paths [file ...]
    The consumer's `set-and-setting` input retained a separate
    `nixpkgs-lock` edge, producing two locked nixpkgs nodes and failing the
    lock-graph guardrail. Made that input follow the root `nixpkgs-lock`.
+9. **2026-08-04 — Flake source was not nixfmt-formatted**:
+   The guardrails `nixfmt-check` rejected `flake.nix` after the consumer
+   output and confirm-app changes. Reformatted the list, runtime-input, and
+   nested-attribute layout with the repository's Nix formatter.
