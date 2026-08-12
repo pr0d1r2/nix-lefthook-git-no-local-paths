@@ -139,3 +139,8 @@ lefthook-git-no-local-paths [file ...]
    The repository fragment repeated `nix-flake-check` already supplied by the
    shared base fragment, producing duplicate YAML keys during assembly.
    Removed the redundant repo-local entries.
+11. **2026-08-12 — Guardrail fidelity used an undeclared actions fragment**:
+   The consumer flake and its checks omitted the `actions` fragment even
+   though the guardrail assembled `base actions nix shell ascii markdown yaml`.
+   Added the fragment to every consumer materialization so the generated
+   `lefthook.yml` matches CI’s expected configuration.
