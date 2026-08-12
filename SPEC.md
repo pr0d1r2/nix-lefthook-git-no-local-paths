@@ -135,3 +135,7 @@ lefthook-git-no-local-paths [file ...]
    The guardrails `nixfmt-check` rejected `flake.nix` after the consumer
    output and confirm-app changes. Reformatted the list, runtime-input, and
    nested-attribute layout with the repository's Nix formatter.
+10. **2026-08-12 — Duplicate lefthook command from overlapping fragments**:
+   The repository fragment repeated `nix-flake-check` already supplied by the
+   shared base fragment, producing duplicate YAML keys during assembly.
+   Removed the redundant repo-local entries.
