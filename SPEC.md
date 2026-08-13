@@ -136,7 +136,12 @@ lefthook-git-no-local-paths [file ...]
    output and confirm-app changes. Reformatted the list, runtime-input, and
    nested-attribute layout with the repository's Nix formatter.
 10. **2026-08-13 — Duplicate `nix-flake-check` hook after fragment assembly**:
-   The `nix` fragment began supplying the hook while the repository-local
-   fragment still defined it, producing invalid YAML and failing the
-   guardrail fidelity and executability checks. Removed the duplicate
-   repository-local definitions.
+    The `nix` fragment began supplying the hook while the repository-local
+    fragment still defined it, producing invalid YAML and failing the
+    guardrail fidelity and executability checks. Removed the duplicate
+    repository-local definitions.
+11. **2026-08-13 — Guardrail fragments diverged from consumer fragments**:
+    The checks materialized a reduced fragment set, while the consumer flake
+    assembled `actions` and `ascii` as well, causing the generated
+    `lefthook.yml` fidelity check to fail. Aligned the check fragments with
+    the consumer's full fragment set.

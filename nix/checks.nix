@@ -5,8 +5,10 @@ forAllSystems (
     inherit pkgs src;
     fragments = [
       "base"
+      "actions"
       "nix"
       "shell"
+      "ascii"
       "markdown"
       "yaml"
     ];
