@@ -135,3 +135,18 @@ lefthook-git-no-local-paths [file ...]
    The guardrails `nixfmt-check` rejected `flake.nix` after the consumer
    output and confirm-app changes. Reformatted the list, runtime-input, and
    nested-attribute layout with the repository's Nix formatter.
+10. **2026-08-13 — Duplicate `nix-flake-check` hook after fragment assembly**:
+    The `nix` fragment began supplying the hook while the repository-local
+    fragment still defined it, producing invalid YAML and failing the
+    guardrail fidelity and executability checks. Removed the duplicate
+    repository-local definitions.
+11. **2026-08-13 — Guardrail fragments diverged from consumer fragments**:
+    The checks materialized a reduced fragment set, while the consumer flake
+    assembled `actions` and `ascii` as well, causing the generated
+    `lefthook.yml` fidelity check to fail. Aligned the check fragments with
+    the consumer's full fragment set.
+12. **2026-08-13 — Guardrail check used an incompatible set-and-setting pin**:
+    The lock advanced to a revision that passed a scalar regex to the newer
+    nixpkgs `sourceByRegex` API, making `checks.actionlint` fail during flake
+    evaluation. Restored the known-compatible `d0196d19` revision and aligned
+    all consumer fragment lists with the fragments supported by that revision.
