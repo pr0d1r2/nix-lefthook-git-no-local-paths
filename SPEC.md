@@ -135,3 +135,8 @@ lefthook-git-no-local-paths [file ...]
    The guardrails `nixfmt-check` rejected `flake.nix` after the consumer
    output and confirm-app changes. Reformatted the list, runtime-input, and
    nested-attribute layout with the repository's Nix formatter.
+10. **2026-08-13 — Duplicate `nix-flake-check` hook after fragment assembly**:
+   The `nix` fragment began supplying the hook while the repository-local
+   fragment still defined it, producing invalid YAML and failing the
+   guardrail fidelity and executability checks. Removed the duplicate
+   repository-local definitions.
