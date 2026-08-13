@@ -27,7 +27,6 @@
       inherit self nixpkgs set-and-setting;
       fragments = [
         "base"
-        "actions"
         "nix"
         "shell"
         "ascii"
@@ -64,7 +63,6 @@
                     pkgs = nixpkgs.legacyPackages.${system};
                     fragments = [
                       "base"
-                      "actions"
                       "nix"
                       "shell"
                       "ascii"
