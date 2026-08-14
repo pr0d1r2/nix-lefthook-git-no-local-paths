@@ -154,3 +154,8 @@ lefthook-git-no-local-paths [file ...]
    The checked-in `lefthook.yml` was absent, causing the guardrail fidelity
    and completeness checks to fail. Regenerated it with the repository's
    selected fragments, including the `actions` fragment.
+14. **2026-08-14 — Confirm runtime omitted actionlint wrapper**:
+   The isolated confirm app used by the guardrail did not include the
+   repository-provided `lefthook-actionlint` executable, so its coherence
+   check failed while validating the generated configuration. Added the
+   wrapper to the confirm app runtime.

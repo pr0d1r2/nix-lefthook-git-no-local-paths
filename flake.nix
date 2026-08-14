@@ -77,6 +77,11 @@
                     nixpkgs.legacyPackages.${system}.gawk
                     nixpkgs.legacyPackages.${system}.git
                     nixpkgs.legacyPackages.${system}.gnugrep
+                    (nixpkgs.legacyPackages.${system}.writeShellApplication {
+                      name = "lefthook-actionlint";
+                      runtimeInputs = [ nixpkgs.legacyPackages.${system}.actionlint ];
+                      text = "exec actionlint \"$@\"";
+                    })
                   ];
                 text =
                   builtins.replaceStrings
