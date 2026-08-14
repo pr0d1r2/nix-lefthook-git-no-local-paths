@@ -146,7 +146,11 @@ lefthook-git-no-local-paths [file ...]
     `lefthook.yml` fidelity check to fail. Aligned the check fragments with
     the consumer's full fragment set.
 12. **2026-08-13 — Guardrail check used an incompatible set-and-setting pin**:
-    The lock advanced to a revision that passed a scalar regex to the newer
-    nixpkgs `sourceByRegex` API, making `checks.actionlint` fail during flake
-    evaluation. Restored the known-compatible `d0196d19` revision and aligned
-    all consumer fragment lists with the fragments supported by that revision.
+   The lock advanced to a revision that passed a scalar regex to the newer
+   nixpkgs `sourceByRegex` API, making `checks.actionlint` fail during flake
+   evaluation. Restored the known-compatible `d0196d19` revision and aligned
+   all consumer fragment lists with the fragments supported by that revision.
+13. **2026-08-14 — Generated lefthook configuration missing**:
+   The checked-in `lefthook.yml` was absent, causing the guardrail fidelity
+   and completeness checks to fail. Regenerated it with the repository's
+   selected fragments, including the `actions` fragment.

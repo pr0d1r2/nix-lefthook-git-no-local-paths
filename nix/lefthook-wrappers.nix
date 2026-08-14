@@ -11,6 +11,13 @@ let
     );
 in
 [
+  (pkgs.writeShellApplication {
+    name = "lefthook-actionlint";
+    runtimeInputs = [ pkgs.actionlint ];
+    text = ''
+      exec actionlint "$@"
+    '';
+  })
   (wrap "lefthook-nixfmt" inputs.nix-lefthook-nixfmt-src {
     runtimeInputs = [ pkgs.nixfmt ];
   })
