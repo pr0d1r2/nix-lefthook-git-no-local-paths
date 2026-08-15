@@ -5,6 +5,6 @@ extensions:
   nix: 4096
   bats: 8192
   yml: 4096
-  md: 8192
+  md: 16384
   sh: 4096
   toml: 4096

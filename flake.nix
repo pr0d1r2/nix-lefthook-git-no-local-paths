@@ -7,7 +7,7 @@
   };
 
   inputs = {
-    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
+    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock/1e6ffb1960305718ccd8935fcedd353d2b35a387";
     nixpkgs.follows = "nixpkgs-lock/nixpkgs";
 
     set-and-setting = {
@@ -77,6 +77,11 @@
                     nixpkgs.legacyPackages.${system}.gawk
                     nixpkgs.legacyPackages.${system}.git
                     nixpkgs.legacyPackages.${system}.gnugrep
+                    (nixpkgs.legacyPackages.${system}.writeShellApplication {
+                      name = "lefthook-actionlint";
+                      runtimeInputs = [ nixpkgs.legacyPackages.${system}.actionlint ];
+                      text = "exec actionlint \"$@\"";
+                    })
                   ];
                 text =
                   builtins.replaceStrings

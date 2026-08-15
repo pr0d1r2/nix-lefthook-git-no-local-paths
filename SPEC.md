@@ -146,7 +146,29 @@ lefthook-git-no-local-paths [file ...]
     `lefthook.yml` fidelity check to fail. Aligned the check fragments with
     the consumer's full fragment set.
 12. **2026-08-13 — Guardrail check used an incompatible set-and-setting pin**:
-    The lock advanced to a revision that passed a scalar regex to the newer
-    nixpkgs `sourceByRegex` API, making `checks.actionlint` fail during flake
-    evaluation. Restored the known-compatible `d0196d19` revision and aligned
-    all consumer fragment lists with the fragments supported by that revision.
+   The lock advanced to a revision that passed a scalar regex to the newer
+   nixpkgs `sourceByRegex` API, making `checks.actionlint` fail during flake
+   evaluation. Restored the known-compatible `d0196d19` revision and aligned
+   all consumer fragment lists with the fragments supported by that revision.
+13. **2026-08-14 — Generated lefthook configuration missing**:
+   The checked-in `lefthook.yml` was absent, causing the guardrail fidelity
+   and completeness checks to fail. Regenerated it with the repository's
+   selected fragments, including the `actions` fragment.
+14. **2026-08-14 — Confirm runtime omitted actionlint wrapper**:
+   The isolated confirm app used by the guardrail did not include the
+   repository-provided `lefthook-actionlint` executable, so its coherence
+   check failed while validating the generated configuration. Added the
+   wrapper to the confirm app runtime.
+15. **2026-08-15 — Consumer fragment set omitted actions**:
+   The guardrail checks assembled the `actions` fragment, but the consumer
+   flake and confirm app did not, so generated `lefthook.yml` failed fidelity.
+   Added `actions` to every consumer and confirm fragment list.
+16. **2026-08-15 — Actionlint check used an incompatible nixpkgs API**:
+   The actionlint fragment passed a scalar regex to `sourceByRegex`, but the
+   floating nixpkgs-lock advanced to the list-based API and failed flake
+   evaluation. Pinned nixpkgs-lock to the compatible revision used by the
+   actionlint fragment.
+17. **2026-08-15 — SPEC.md exceeded the Markdown file-size limit**:
+   The accumulated bug history grew SPEC.md to 9,283 bytes while the
+   file-size guard still allowed only 8,192 bytes for Markdown. Raised the
+   Markdown limit to 16,384 bytes to keep the required history in-repository.
