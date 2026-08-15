@@ -168,3 +168,7 @@ lefthook-git-no-local-paths [file ...]
    floating nixpkgs-lock advanced to the list-based API and failed flake
    evaluation. Pinned nixpkgs-lock to the compatible revision used by the
    actionlint fragment.
+17. **2026-08-15 — SPEC.md exceeded the Markdown file-size limit**:
+   The accumulated bug history grew SPEC.md to 9,283 bytes while the
+   file-size guard still allowed only 8,192 bytes for Markdown. Raised the
+   Markdown limit to 16,384 bytes to keep the required history in-repository.
