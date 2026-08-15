@@ -159,3 +159,7 @@ lefthook-git-no-local-paths [file ...]
    repository-provided `lefthook-actionlint` executable, so its coherence
    check failed while validating the generated configuration. Added the
    wrapper to the confirm app runtime.
+15. **2026-08-15 — Consumer fragment set omitted actions**:
+   The guardrail checks assembled the `actions` fragment, but the consumer
+   flake and confirm app did not, so generated `lefthook.yml` failed fidelity.
+   Added `actions` to every consumer and confirm fragment list.
