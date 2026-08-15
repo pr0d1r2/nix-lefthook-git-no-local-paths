@@ -7,7 +7,7 @@
   };
 
   inputs = {
-    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
+    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock/1e6ffb1960305718ccd8935fcedd353d2b35a387";
     nixpkgs.follows = "nixpkgs-lock/nixpkgs";
 
     set-and-setting = {
@@ -27,7 +27,6 @@
       inherit self nixpkgs set-and-setting;
       fragments = [
         "base"
-        "actions"
         "nix"
         "shell"
         "ascii"
@@ -43,7 +42,6 @@
           inherit self nixpkgs set-and-setting;
           fragments = [
             "base"
-            "actions"
             "nix"
             "shell"
             "ascii"
@@ -65,7 +63,6 @@
                     pkgs = nixpkgs.legacyPackages.${system};
                     fragments = [
                       "base"
-                      "actions"
                       "nix"
                       "shell"
                       "ascii"

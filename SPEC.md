@@ -163,3 +163,8 @@ lefthook-git-no-local-paths [file ...]
    The guardrail checks assembled the `actions` fragment, but the consumer
    flake and confirm app did not, so generated `lefthook.yml` failed fidelity.
    Added `actions` to every consumer and confirm fragment list.
+16. **2026-08-15 — Actionlint check used an incompatible nixpkgs API**:
+   The actionlint fragment passed a scalar regex to `sourceByRegex`, but the
+   floating nixpkgs-lock advanced to the list-based API and failed flake
+   evaluation. Pinned nixpkgs-lock to the compatible revision used by the
+   actionlint fragment.
