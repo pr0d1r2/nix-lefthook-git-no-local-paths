@@ -172,3 +172,8 @@ lefthook-git-no-local-paths [file ...]
    The accumulated bug history grew SPEC.md to 9,283 bytes while the
    file-size guard still allowed only 8,192 bytes for Markdown. Raised the
    Markdown limit to 16,384 bytes to keep the required history in-repository.
+18. **2026-08-15 — Guardrail actionlint check used an incompatible dependency
+    revision**: The floating `set-and-setting` lock advanced to a revision
+    whose actionlint check passed a scalar workflow regex to nixpkgs' list-based
+    source filter, failing flake evaluation. Pinned `set-and-setting` to the
+    compatible revision and removed its unsupported `actions` fragment.
