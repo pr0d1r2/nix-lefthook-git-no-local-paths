@@ -22,7 +22,7 @@ for f in "${files[@]}"; do
   matches=$(grep -HnE '/Users/[a-zA-Z0-9._-]|/home/[a-zA-Z0-9._-]|/roo''t/|/tmp/[a-zA-Z0-9._-]' -- "$f" || true)
 
   case "$f" in
-    .github/CODEOWNERS | .github/CODEOWNERS.* | */.github/CODEOWNERS | */.github/CODEOWNERS.*)
+    CODEOWNERS | CODEOWNERS.* | */CODEOWNERS | */CODEOWNERS.*)
       # CODEOWNERS patterns may start with / to mean the repository root.
       matches=$(printf '%s\n' "$matches" | grep -vE '^[^:]+:[0-9]+:[[:space:]]*/' || true)
       ;;

@@ -32,6 +32,14 @@ setup() {
     assert_output ""
 }
 
+@test "root-relative repository CODEOWNERS patterns pass" {
+    p="/home""/project"
+    printf '%s @owner\n/README.md @owner\n' "$p" > "$TMP/CODEOWNERS"
+    run bash "$BATS_TEST_DIRNAME/../../lefthook-git-no-local-paths.sh" "$TMP/CODEOWNERS"
+    assert_success
+    assert_output ""
+}
+
 @test "root-relative CODEOWNERS extension patterns pass" {
     mkdir -p "$TMP/.github"
     p="/tmp""/generated"
