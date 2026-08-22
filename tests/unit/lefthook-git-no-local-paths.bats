@@ -23,6 +23,40 @@ setup() {
     assert_success
 }
 
+@test "root-relative CODEOWNERS patterns pass" {
+    mkdir -p "$TMP/.github"
+    p="/home""/project"
+    printf '%s @owner\n/README.md @owner\n' "$p" > "$TMP/.github/CODEOWNERS"
+    run bash "$BATS_TEST_DIRNAME/../../lefthook-git-no-local-paths.sh" "$TMP/.github/CODEOWNERS"
+    assert_success
+    assert_output ""
+}
+
+@test "root-relative repository CODEOWNERS patterns pass" {
+    p="/home""/project"
+    printf '%s @owner\n/README.md @owner\n' "$p" > "$TMP/CODEOWNERS"
+    run bash "$BATS_TEST_DIRNAME/../../lefthook-git-no-local-paths.sh" "$TMP/CODEOWNERS"
+    assert_success
+    assert_output ""
+}
+
+@test "root-relative CODEOWNERS extension patterns pass" {
+    mkdir -p "$TMP/.github"
+    p="/tmp""/generated"
+    printf '%s @owner\n' "$p" > "$TMP/.github/CODEOWNERS.example"
+    run bash "$BATS_TEST_DIRNAME/../../lefthook-git-no-local-paths.sh" "$TMP/.github/CODEOWNERS.example"
+    assert_success
+    assert_output ""
+}
+
+@test "local path in CODEOWNERS owner text still fails" {
+    mkdir -p "$TMP/.github"
+    p="/home""/user/project"
+    printf 'README.md @owner-%s\n' "$p" > "$TMP/.github/CODEOWNERS"
+    run bash "$BATS_TEST_DIRNAME/../../lefthook-git-no-local-paths.sh" "$TMP/.github/CODEOWNERS"
+    assert_failure
+}
+
 @test "file with Users path fails" {
     p="/User""s/john/projects/repo"
     printf 'url = "git+file://%s";\n' "$p" > "$TMP/bad.nix"
