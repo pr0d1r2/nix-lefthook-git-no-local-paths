@@ -173,7 +173,12 @@ lefthook-git-no-local-paths [file ...]
    file-size guard still allowed only 8,192 bytes for Markdown. Raised the
    Markdown limit to 16,384 bytes to keep the required history in-repository.
 18. **2026-08-15 — Guardrail actionlint check used an incompatible dependency
-    revision**: The floating `set-and-setting` lock advanced to a revision
-    whose actionlint check passed a scalar workflow regex to nixpkgs' list-based
-    source filter, failing flake evaluation. Pinned `set-and-setting` to the
-    compatible revision and removed its unsupported `actions` fragment.
+   revision**: The floating `set-and-setting` lock advanced to a revision
+   whose actionlint check passed a scalar workflow regex to nixpkgs' list-based
+   source filter, failing flake evaluation. Pinned `set-and-setting` to the
+   compatible revision and removed its unsupported `actions` fragment.
+19. **2026-08-22 — Git local-path test growth exceeded the Bats file-size limit**:
+   The expanded CODEOWNERS and path-pattern coverage made
+   `tests/unit/lefthook-git-no-local-paths.bats` 8,336 bytes, exceeding the
+   8,192-byte Bats limit. Raised the Bats limit to 12,288 bytes so the complete
+   regression coverage remains in one test file.
