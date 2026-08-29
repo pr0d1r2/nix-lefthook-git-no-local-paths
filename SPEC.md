@@ -187,3 +187,10 @@ lefthook-git-no-local-paths [file ...]
    fragments, so generated `lefthook.yml` failed fidelity and the confirm app
    could not resolve `lefthook-bats-unit`. Aligned every fragment list and
    regenerated the hook configuration.
+21. **2026-08-29 — Linter coverage exemptions were missing**:
+   The linter-coverage guard requires an explicit exemption manifest for tracked
+   classes without a configured linter. Added exemptions for the repository's
+   editor, environment, Git, lockfile, and license files.
+22. **2026-08-29 — Generated lefthook configuration exceeded YAML limit**:
+   Adding the required guardrail fragment commands made `lefthook.yml` exceed
+   the 4,096-byte YAML limit. Raised the YAML limit to 8,192 bytes.

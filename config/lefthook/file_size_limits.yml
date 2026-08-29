@@ -4,7 +4,7 @@ extensions:
   lock: 196608
   nix: 4096
   bats: 12288
-  yml: 4096
+  yml: 8192
   md: 16384
   sh: 4096
   toml: 4096
