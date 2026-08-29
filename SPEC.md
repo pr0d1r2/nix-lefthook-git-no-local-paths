@@ -205,3 +205,9 @@ lefthook-git-no-local-paths [file ...]
 25. **2026-08-29 — Flake source exceeded Nix file-size limit**:
    The completed consumer flake is 4,549 bytes, exceeding the 4,096-byte
    Nix limit. Raised the Nix limit to 8,192 bytes for the required flake.
+26. **2026-08-29 — Bats libraries were unavailable to non-interactive CI**:
+   The guardrail invoked `nix develop --command bats`, which does not run the
+   interactive shell hook that exported `BATS_LIB_PATH`; all test `setup()`
+   functions therefore failed to load bats-support and bats-assert. Changed
+   the devShell input to the repository's `bats.withLibraries` package so the
+   libraries are available during command execution as well.

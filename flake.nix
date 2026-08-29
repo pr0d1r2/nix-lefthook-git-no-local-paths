@@ -45,9 +45,15 @@
             system: shells:
             builtins.mapAttrs (
               _name: shell:
-              shell.overrideAttrs (old: {
-                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ nixpkgs.legacyPackages.${system}.bats ];
-              })
+              shell.overrideAttrs (old:
+                let
+                  batsWithLibs = import ./nix/bats-with-libs.nix nixpkgs.legacyPackages.${system};
+                in
+                {
+                  nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ batsWithLibs ];
+                  BATS_LIB_PATH = "${batsWithLibs}/share/bats";
+                }
+              )
             ) shells
           )
           (set-and-setting.lib.mkConsumerFlake {
