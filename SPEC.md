@@ -118,6 +118,11 @@ lefthook-git-no-local-paths [file ...]
    `nix flake update` advanced `set-and-setting` to rev `d2fa92cc` which
    dropped the `lib` output (`mkConsumerFlake`, `materializationFor`).
    Pinned `set-and-setting` back to `d0196d19`, the last rev exposing `lib`.
+7. **2026-08-29 — Guardrails rejected unbounded lefthook commands**:
+   The main lefthook configuration omitted failure output, parallel execution,
+   and timeout wrappers on several commands, causing the guardrails check to
+   fail. Added the required hook settings and timeout wrappers to the tracked
+   repo-local source so they survive generated lefthook.yml synchronization.
 6. **2026-07-29 — flake.lock exceeds file-size-check limit**:
    `flake.lock` grew to 120KB (212 nodes) due to transitive dependency
    duplication across `set-and-setting` fragments. The `.lock` extension

@@ -1,8 +1,35 @@
 # Repo-local checks carried through from vendored lefthook.yml (#126).
 ---
 
+output: failure
+
 pre-commit:
+  parallel: true
   commands:
+    changelog-touched:
+      run: timeout ${LEFTHOOK_CHANGELOG_TOUCHED_TIMEOUT:-30} lefthook-changelog-touched
+    narrow-language:
+      run: timeout ${LEFTHOOK_NARROW_LANGUAGE_TIMEOUT:-30} lefthook-narrow-language {staged_files}
+    gitleaks:
+      run: timeout ${LEFTHOOK_GITLEAKS_TIMEOUT:-30} lefthook-gitleaks {staged_files}
+    git-conflict-markers:
+      run: timeout ${LEFTHOOK_CONFLICT_MARKERS_TIMEOUT:-30} lefthook-git-conflict-markers {staged_files}
+    git-no-local-paths:
+      run: timeout ${LEFTHOOK_GIT_NO_LOCAL_PATHS_TIMEOUT:-30} lefthook-git-no-local-paths {staged_files}
+    nixfmt:
+      run: timeout ${LEFTHOOK_NIXFMT_TIMEOUT:-30} lefthook-nixfmt {staged_files}
+    statix:
+      run: timeout ${LEFTHOOK_STATIX_TIMEOUT:-30} lefthook-statix {staged_files}
+    deadnix:
+      run: timeout ${LEFTHOOK_DEADNIX_TIMEOUT:-30} lefthook-deadnix {staged_files}
+    nix-no-embedded-shell:
+      run: timeout ${LEFTHOOK_NIX_NO_EMBEDDED_SHELL_TIMEOUT:-30} lefthook-nix-no-embedded-shell {staged_files}
+    shellcheck:
+      run: timeout ${LEFTHOOK_SHELLCHECK_TIMEOUT:-30} lefthook-shellcheck {staged_files}
+    shfmt:
+      run: timeout ${LEFTHOOK_SHFMT_TIMEOUT:-30} lefthook-shfmt {staged_files}
+    no-shell-functions:
+      run: timeout ${LEFTHOOK_NO_SHELL_FUNCTIONS_TIMEOUT:-30} lefthook-no-shell-functions {staged_files}
     bats-parse:
       glob: "*.bats"
       run: timeout ${LEFTHOOK_BATS_PARSE_TIMEOUT:-30} bats -c {staged_files}
@@ -14,7 +41,24 @@ pre-commit:
       run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} lefthook-bats-unit {staged_files}
 
 pre-push:
+  parallel: true
   commands:
+    nixfmt:
+      run: timeout ${LEFTHOOK_NIXFMT_TIMEOUT:-30} lefthook-nixfmt {push_files}
+    statix:
+      run: timeout ${LEFTHOOK_STATIX_TIMEOUT:-30} lefthook-statix {push_files}
+    deadnix:
+      run: timeout ${LEFTHOOK_DEADNIX_TIMEOUT:-30} lefthook-deadnix {push_files}
+    nix-no-embedded-shell:
+      run: timeout ${LEFTHOOK_NIX_NO_EMBEDDED_SHELL_TIMEOUT:-30} lefthook-nix-no-embedded-shell {push_files}
+    nix-flake-eval:
+      run: timeout ${LEFTHOOK_NIX_FLAKE_EVAL_TIMEOUT:-30} lefthook-nix-flake-eval
+    shellcheck:
+      run: timeout ${LEFTHOOK_SHELLCHECK_TIMEOUT:-30} lefthook-shellcheck {push_files}
+    shfmt:
+      run: timeout ${LEFTHOOK_SHFMT_TIMEOUT:-30} lefthook-shfmt {push_files}
+    no-shell-functions:
+      run: timeout ${LEFTHOOK_NO_SHELL_FUNCTIONS_TIMEOUT:-30} lefthook-no-shell-functions {push_files}
     bats-unit:
       glob: "*.bats"
       run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} lefthook-bats-unit {push_files}
