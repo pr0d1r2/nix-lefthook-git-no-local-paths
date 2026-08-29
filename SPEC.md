@@ -220,3 +220,7 @@ lefthook-git-no-local-paths [file ...]
    The structural manifest check scanned the entire outputs expression and
    rejected the nested `old: let` used to customize the devShell. Removed the
    nested binding while preserving the Bats library package and environment.
+28. **2026-08-29 — Repo-local Lefthook policy was never assembled**:
+   The policy file used the nonstandard `lefthook-repo.yml` name, so generated
+   configuration discarded its failure output, parallelism, and timeouts.
+   Renamed it to Lefthook's automatically merged `lefthook-local.yml`.

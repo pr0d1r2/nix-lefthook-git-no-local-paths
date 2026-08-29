@@ -1,4 +1,4 @@
-# Repo-local checks carried through from vendored lefthook.yml (#126).
+# Repo-local checks carried through from vendored lefthook.yml.
 ---
 
 output: failure

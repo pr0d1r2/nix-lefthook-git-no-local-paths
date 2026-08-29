@@ -3,16 +3,16 @@
 pre-commit:
   commands:
     changelog-touched:
-      run: lefthook-changelog-touched
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-changelog-touched
     narrow-language:
       glob: "*.{md,nix,sh,bats,yml,yaml,toml}"
-      run: lefthook-narrow-language {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-narrow-language {staged_files}
     gitleaks:
-      run: lefthook-gitleaks {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-gitleaks {staged_files}
     git-conflict-markers:
-      run: lefthook-git-conflict-markers {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-git-conflict-markers {staged_files}
     git-no-local-paths:
-      run: lefthook-git-no-local-paths {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-git-no-local-paths {staged_files}
     nix-flake-check:
       glob: "*.nix"
       run: timeout ${LEFTHOOK_NIX_FLAKE_CHECK_TIMEOUT:-60} nix flake check
@@ -21,25 +21,25 @@ pre-commit:
       run: timeout ${LEFTHOOK_ACTIONLINT_TIMEOUT:-30} lefthook-actionlint {staged_files}
     nixfmt:
       glob: "*.nix"
-      run: lefthook-nixfmt {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-nixfmt {staged_files}
     statix:
       glob: "*.nix"
-      run: lefthook-statix {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-statix {staged_files}
     deadnix:
       glob: "*.nix"
-      run: lefthook-deadnix {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-deadnix {staged_files}
     nix-no-embedded-shell:
       glob: "*.nix"
-      run: lefthook-nix-no-embedded-shell {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-nix-no-embedded-shell {staged_files}
     shellcheck:
       glob: "*.sh"
-      run: lefthook-shellcheck {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-shellcheck {staged_files}
     shfmt:
       glob: "*.sh"
-      run: lefthook-shfmt {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-shfmt {staged_files}
     no-shell-functions:
       glob: "*.sh"
-      run: lefthook-no-shell-functions {staged_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-no-shell-functions {staged_files}
     unicode-lint:
       glob: "*"
       exclude: '\.(gif|png|jpg|jpeg|ico|webp|bmp|tiff|pdf|woff2?|ttf|eot|mp[34]|wav|ogg|zip|gz|tar|iso)$'
@@ -56,15 +56,6 @@ pre-commit:
     taplo:
       glob: "*.toml"
       run: timeout ${LEFTHOOK_TAPLO_TIMEOUT:-30} lefthook-taplo {staged_files}
-    bats-parse:
-      glob: "*.bats"
-      run: timeout ${LEFTHOOK_BATS_PARSE_TIMEOUT:-30} bats -c {staged_files}
-    taplo-lint:
-      glob: "**/*.toml"
-      run: timeout ${LEFTHOOK_TAPLO_LINT_TIMEOUT:-30} taplo check {staged_files}
-    bats-unit:
-      glob: "*.bats"
-      run: timeout ${LEFTHOOK_BATS_UNIT_TIMEOUT:-120} lefthook-bats-unit {staged_files}
 
 pre-push:
   commands:
@@ -122,9 +113,6 @@ pre-push:
     taplo:
       glob: "*.toml"
       run: timeout ${LEFTHOOK_TAPLO_TIMEOUT:-30} lefthook-taplo {push_files}
-    taplo-lint:
-      glob: "**/*.toml"
-      run: timeout ${LEFTHOOK_TAPLO_LINT_TIMEOUT:-30} taplo check {all_files}
 
 commit-msg:
   commands:
