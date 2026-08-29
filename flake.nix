@@ -39,20 +39,18 @@
       src = ./.;
     }
     // {
-      devShells = nixpkgs.lib.mapAttrs
-        (
-          system: shells:
-          builtins.mapAttrs
-            (
+      devShells =
+        nixpkgs.lib.mapAttrs
+          (
+            system: shells:
+            builtins.mapAttrs (
               _name: shell:
               shell.overrideAttrs (old: {
                 nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ nixpkgs.legacyPackages.${system}.bats ];
               })
-            )
-            shells
-        )
-        (
-          set-and-setting.lib.mkConsumerFlake {
+            ) shells
+          )
+          (set-and-setting.lib.mkConsumerFlake {
             inherit self nixpkgs set-and-setting;
             fragments = [
               "base"
@@ -66,8 +64,7 @@
               "toml"
             ];
             src = ./.;
-          }
-        ).devShells;
+          }).devShells;
       apps = nixpkgs.lib.genAttrs (import ./nix/systems.nix) (
         system:
         (set-and-setting.lib.mkConsumerFlake {

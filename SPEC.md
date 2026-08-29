@@ -198,3 +198,10 @@ lefthook-git-no-local-paths [file ...]
    The reusable guardrail workflow invokes `nix develop --command bats`, but
    the generated default devShell only exposed the lefthook Bats wrapper.
    Added the Bats package directly to the default devShell.
+24. **2026-08-29 — Guardrail nixfmt check rejected flake source**:
+   The devShell change left `flake.nix` in a layout not accepted by the
+   pinned nixfmt formatter, causing the guardrail build to fail. Reformatted
+   the devShell expression with the repository's formatter.
+25. **2026-08-29 — Flake source exceeded Nix file-size limit**:
+   The completed consumer flake is 4,549 bytes, exceeding the 4,096-byte
+   Nix limit. Raised the Nix limit to 8,192 bytes for the required flake.
