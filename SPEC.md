@@ -194,3 +194,7 @@ lefthook-git-no-local-paths [file ...]
 22. **2026-08-29 — Generated lefthook configuration exceeded YAML limit**:
    Adding the required guardrail fragment commands made `lefthook.yml` exceed
    the 4,096-byte YAML limit. Raised the YAML limit to 8,192 bytes.
+23. **2026-08-29 — Guardrail Bats command missing from devShell**:
+   The reusable guardrail workflow invokes `nix develop --command bats`, but
+   the generated default devShell only exposed the lefthook Bats wrapper.
+   Added the Bats package directly to the default devShell.
