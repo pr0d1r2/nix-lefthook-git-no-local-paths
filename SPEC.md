@@ -224,3 +224,7 @@ lefthook-git-no-local-paths [file ...]
    The policy file used the nonstandard `lefthook-repo.yml` name, so generated
    configuration discarded its failure output, parallelism, and timeouts.
    Renamed it to Lefthook's automatically merged `lefthook-local.yml`.
+29. **2026-08-29 — Generated Lefthook policy omitted timeout wrappers**:
+   The tracked generated configuration still lacked the guardrail-required
+   failure output, parallel execution, and timeout wrappers after assembly.
+   Restored those settings across every hook command, including pre-push.

@@ -1,6 +1,9 @@
 ---
 
+output: failure
+
 pre-commit:
+  parallel: true
   commands:
     changelog-touched:
       run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-changelog-touched
@@ -58,6 +61,7 @@ pre-commit:
       run: timeout ${LEFTHOOK_TAPLO_TIMEOUT:-30} lefthook-taplo {staged_files}
 
 pre-push:
+  parallel: true
   commands:
     linter-coverage:
       run: timeout ${LEFTHOOK_LINTER_COVERAGE_FULL_TIMEOUT:-30} lefthook-linter-coverage-full
@@ -69,29 +73,29 @@ pre-push:
       run: timeout ${LEFTHOOK_ACTIONLINT_TIMEOUT:-30} lefthook-actionlint {push_files}
     nixfmt:
       glob: "*.nix"
-      run: lefthook-nixfmt {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-nixfmt {push_files}
     statix:
       glob: "*.nix"
-      run: lefthook-statix {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-statix {push_files}
     deadnix:
       glob: "*.nix"
-      run: lefthook-deadnix {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-deadnix {push_files}
     nix-no-embedded-shell:
       glob: "*.nix"
-      run: lefthook-nix-no-embedded-shell {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-nix-no-embedded-shell {push_files}
     nix-flake-eval:
       glob: "*.nix"
-      run: lefthook-nix-flake-eval
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-nix-flake-eval
 ---
     shellcheck:
       glob: "*.sh"
-      run: lefthook-shellcheck {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-shellcheck {push_files}
     shfmt:
       glob: "*.sh"
-      run: lefthook-shfmt {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-shfmt {push_files}
     no-shell-functions:
       glob: "*.sh"
-      run: lefthook-no-shell-functions {push_files}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-no-shell-functions {push_files}
 ---
     bats-parse:
       glob: "**/*.bats"
@@ -117,4 +121,4 @@ pre-push:
 commit-msg:
   commands:
     commit-msg-lint:
-      run: lefthook-commit-msg-lint {1}
+      run: timeout ${LEFTHOOK_COMMAND_TIMEOUT:-30} lefthook-commit-msg-lint {1}
