@@ -211,3 +211,7 @@ lefthook-git-no-local-paths [file ...]
    functions therefore failed to load bats-support and bats-assert. Changed
    the devShell input to the repository's `bats.withLibraries` package so the
    libraries are available during command execution as well.
+27. **2026-08-29 — Flake manifest guard misclassified nested `let`**:
+   The structural manifest check scanned the entire outputs expression and
+   rejected the nested `old: let` used to customize the devShell. Removed the
+   nested binding while preserving the Bats library package and environment.
