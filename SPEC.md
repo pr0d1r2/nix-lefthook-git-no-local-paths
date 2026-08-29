@@ -182,3 +182,8 @@ lefthook-git-no-local-paths [file ...]
    `tests/unit/lefthook-git-no-local-paths.bats` 8,336 bytes, exceeding the
    8,192-byte Bats limit. Raised the Bats limit to 12,288 bytes so the complete
    regression coverage remains in one test file.
+20. **2026-08-29 — Guardrail fragment set drifted from the consumer**:
+   The consumer and check definitions omitted the `actions`, `bats`, and `toml`
+   fragments, so generated `lefthook.yml` failed fidelity and the confirm app
+   could not resolve `lefthook-bats-unit`. Aligned every fragment list and
+   regenerated the hook configuration.

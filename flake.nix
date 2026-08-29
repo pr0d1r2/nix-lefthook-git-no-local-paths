@@ -27,11 +27,14 @@
       inherit self nixpkgs set-and-setting;
       fragments = [
         "base"
+        "actions"
         "nix"
         "shell"
         "ascii"
+        "bats"
         "markdown"
         "yaml"
+        "toml"
       ];
       src = ./.;
     }
@@ -42,11 +45,14 @@
           inherit self nixpkgs set-and-setting;
           fragments = [
             "base"
+            "actions"
             "nix"
             "shell"
             "ascii"
+            "bats"
             "markdown"
             "yaml"
+            "toml"
           ];
           src = ./.;
         }).apps.${system}
@@ -63,11 +69,14 @@
                     pkgs = nixpkgs.legacyPackages.${system};
                     fragments = [
                       "base"
+                      "actions"
                       "nix"
                       "shell"
                       "ascii"
+                      "bats"
                       "markdown"
                       "yaml"
+                      "toml"
                     ];
                   }).packages
                   ++ [
