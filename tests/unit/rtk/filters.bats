@@ -13,7 +13,3 @@ setup() {
     assert_success
 }
 
-@test "passes toml syntax check" {
-    run taplo check "$FILTERS"
-    assert_success
-}

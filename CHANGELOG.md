@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- Drop the specs that asserted the vendored-era layout: the generated
+  `lefthook.yml`, `.markdownlint.yml` and `.yamllint.yml`, the old CI jobs and
+  flake outputs, the old wrapper list, and a bare `taplo` call the standard's
+  `taplo` check already covers. The standard now runs this suite in CI, and
+  those 33 assertions described files the standard owns.
 - Use the standard's `confirm` app. The repository's own copy had a fixed
   fragment list without `bats`, so the guardrails workflow could not find the
   `lefthook-bats-parse` and `lefthook-bats-unit` wrappers it now needs.
