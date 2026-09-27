@@ -32,6 +32,7 @@
         "ascii"
         "markdown"
         "yaml"
+        "toml"
       ];
       src = ./.;
     }
@@ -47,6 +48,7 @@
             "ascii"
             "markdown"
             "yaml"
+            "toml"
           ];
           src = ./.;
         }).apps.${system}
@@ -68,6 +70,7 @@
                       "ascii"
                       "markdown"
                       "yaml"
+                      "toml"
                     ];
                   }).packages
                   ++ [
