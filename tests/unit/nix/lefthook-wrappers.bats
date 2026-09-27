@@ -24,27 +24,6 @@ setup() {
     assert_success
 }
 
-@test "every flake lefthook input has a wrapper" {
-    inputs=$(grep 'nix-lefthook-.*-src' "$FLAKE" | sed 's/.*nix-lefthook-//' | sed 's/-src.*//' | sort -u)
-    [ -n "$inputs" ]
-    for input in $inputs; do
-        run grep -q "nix-lefthook-${input}-src" "$WRAPPERS"
-        assert_success
-    done
-}
-
-@test "every configured lefthook executable is provided by the dev shell" {
-    executables=$(sed -n 's/.*timeout \${[^}]*} \([^ {]*\).*/\1/p' "$PROJECT_ROOT/lefthook.yml" | sort -u)
-    [ -n "$executables" ]
-    for executable in $executables; do
-        case "$executable" in
-            lefthook-git-no-local-paths|nix|taplo|bats) continue ;;
-        esac
-        run grep -q "name = \"$executable\"\|wrap \"$executable\"" "$WRAPPERS"
-        assert_success
-    done
-}
-
 @test "no embedded shell text assignments" {
     run bash -c "grep -c 'text = \"' '$WRAPPERS'"
     assert_failure

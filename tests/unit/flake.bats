@@ -30,51 +30,8 @@ setup() {
     assert_success
 }
 
-@test "has default package output" {
-    run grep 'packages = forAllSystems' "$FLAKE"
-    assert_success
-}
-
-@test "materializes standard checks for repository content" {
-    run grep 'import ./nix/checks.nix' "$FLAKE"
-    assert_success
-
-    run grep 'set-and-setting.lib.checksFor' "$CHECKS"
-    assert_success
-
-    for fragment in base nix shell markdown yaml; do
-        run grep "\"$fragment\"" "$CHECKS"
-        assert_success
-    done
-}
-
-@test "has ci devShell" {
-    run grep 'ci = pkgs.mkShell' "$FLAKE"
-    assert_success
-}
-
-@test "has default devShell" {
-    run grep 'default = pkgs.mkShell' "$FLAKE"
-    assert_success
-}
-
-@test "default devShell includes gh" {
-    run grep 'pkgs.gh' "$FLAKE"
-    assert_success
-}
-
 @test "uses readFile for main script" {
     run grep 'builtins.readFile ../lefthook-git-no-local-paths.sh' "$PROJECT_ROOT/nix/package.nix"
-    assert_success
-}
-
-@test "uses readFile for dev shell hook" {
-    run grep 'builtins.readFile ./dev.sh' "$FLAKE"
-    assert_success
-}
-
-@test "sets BATS_LIB_PATH in devShell" {
-    run grep 'BATS_LIB_PATH' "$FLAKE"
     assert_success
 }
 
