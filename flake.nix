@@ -7,7 +7,7 @@
   };
 
   inputs = {
-    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock/1e6ffb1960305718ccd8935fcedd353d2b35a387";
+    nixpkgs-lock.url = "github:pr0d1r2/nixpkgs-lock";
     nixpkgs.follows = "nixpkgs-lock/nixpkgs";
 
     set-and-setting = {
